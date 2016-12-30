@@ -18,7 +18,7 @@ type Time struct {
 	Duration time.Duration `json:"duration"`
 }
 
-// TimesWithContext merges the provided context and supplied timesdewey4
+// TimesWithContext merges the provided context and supplied times
 func TimesWithContext(ctx context.Context, newTimes Times) context.Context {
 	prevContexts := TimesFromContext(ctx)
 
