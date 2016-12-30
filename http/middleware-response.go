@@ -25,6 +25,22 @@ func RenderContexts() func(http.Handler) http.Handler {
 
 			var response Response
 
+			if meta := contexts.MetaFromContext(r.Context()); meta != nil {
+				response.Meta = meta
+			}
+
+			if payload := contexts.PayloadFromContext(r.Context()); payload != nil {
+				response.Payload = payload
+			}
+
+			if messages := contexts.MessagesFromContext(r.Context()); messages != nil {
+				response.Messages = messages
+			}
+
+			if warnings := contexts.WarningsFromContext(r.Context()); warnings != nil {
+				response.Warnings = warnings
+			}
+
 			if errors := contexts.ErrorsFromContext(r.Context()); errors != nil {
 				response.Errors = errors
 			}
