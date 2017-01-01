@@ -21,32 +21,36 @@ type Response struct {
 func RenderContexts() func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
 			next.ServeHTTP(w, r)
 
 			var response Response
 
-			if meta := contexts.MetaFromContext(r.Context()); meta != nil {
+			ctx := r.Context()
+
+			if meta := contexts.MetaFromContext(ctx); meta != nil {
 				response.Meta = meta
 			}
 
-			if payload := contexts.PayloadFromContext(r.Context()); payload != nil {
+			if payload := contexts.PayloadFromContext(ctx); payload != nil {
 				response.Payload = payload
 			}
 
-			if messages := contexts.MessagesFromContext(r.Context()); messages != nil {
+			if messages := contexts.MessagesFromContext(ctx); messages != nil {
 				response.Messages = messages
 			}
 
-			if warnings := contexts.WarningsFromContext(r.Context()); warnings != nil {
+			if warnings := contexts.WarningsFromContext(ctx); warnings != nil {
 				response.Warnings = warnings
 			}
 
-			if errors := contexts.ErrorsFromContext(r.Context()); errors != nil {
+			if errors := contexts.ErrorsFromContext(ctx); errors != nil {
 				response.Errors = errors
 			}
 
 			if err := json.NewEncoder(w).Encode(response); err != nil {
 				// TODO: Handle Err Here
+				panic(err)
 			}
 		})
 	}

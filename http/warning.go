@@ -8,5 +8,5 @@ import (
 
 // Warnings add warnings to the provided http context
 func Warnings(r *http.Request, warnings ...string) {
-	r.WithContext(contexts.WarningsWithContext(r.Context(), warnings...))
+	(*r) = *r.WithContext(contexts.WarningsWithContext(r.Context(), warnings...))
 }

@@ -11,5 +11,5 @@ func Meta(r *http.Request, key string, val interface{}) {
 	newMap := make(map[string]interface{})
 	newMap[key] = val
 
-	r.WithContext(contexts.MetaWithContext(r.Context(), newMap))
+	(*r) = *r.WithContext(contexts.MetaWithContext(r.Context(), newMap))
 }

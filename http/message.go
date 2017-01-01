@@ -8,5 +8,5 @@ import (
 
 // Messages adds messages to the provided http context
 func Messages(r *http.Request, messages ...string) {
-	r.WithContext(contexts.MessagesWithContext(r.Context(), messages...))
+	(*r) = *r.WithContext(contexts.MessagesWithContext(r.Context(), messages...))
 }

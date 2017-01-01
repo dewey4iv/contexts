@@ -16,7 +16,7 @@ func Time(r *http.Request, timer string, start time.Time, end time.Time) {
 		Duration: time.Duration(start.UnixNano() - end.UnixNano()),
 	}
 
-	r.WithContext(contexts.TimesWithContext(r.Context(), newTimes))
+	(*r) = *r.WithContext(contexts.TimesWithContext(r.Context(), newTimes))
 }
 
 // Times adds contects.Times to an http context
@@ -27,5 +27,5 @@ func Times(r *http.Request, newTimer contexts.Times) {
 		prevContexts[k] = v
 	}
 
-	r.WithContext(contexts.TimesWithContext(r.Context(), prevContexts))
+	(*r) = *r.WithContext(contexts.TimesWithContext(r.Context(), prevContexts))
 }
