@@ -13,7 +13,7 @@ func Time(r *http.Request, timer string, start time.Time, end time.Time) {
 	newTimes[timer] = contexts.Time{
 		Start:    start,
 		End:      end,
-		Duration: time.Duration(start.UnixNano() - end.UnixNano()),
+		Duration: time.Duration(end.UnixNano() - start.UnixNano()),
 	}
 
 	(*r) = *r.WithContext(contexts.TimesWithContext(r.Context(), newTimes))
